@@ -1,5 +1,5 @@
 var vudrmToken = "{your-vudrm-token}";
-(function() {
+(function () {
     var player = videojs("my-video", {
         autoplay: true,
     });
@@ -15,21 +15,22 @@ var vudrmToken = "{your-vudrm-token}";
 
 var setupWidevine = (player) => {
     player.src({
-        src: "{your-stream}",
-        type: "{your-stream-type}",
+        src: '<your url here>',
+        type: 'application/dash+xml',
         keySystems: {
-            "com.apple.fps.1_0": {},
-        },
+            'com.widevine.alpha': '<YOUR URL HERE>'
+        }
     });
 };
 
 var setupPlayReady = (player) => {
     player.src({
-        src: "{your-stream}",
-        type: "{your-stream-type}",
-        keySystems: {
-            "com.apple.fps.1_0": {},
-        },
+        'com.microsoft.playready': {
+            url: '<YOUR_KEY_URL>',
+            licenseHeaders: {
+                'Some-Header': 'value'
+            }
+        }
     });
 };
 
@@ -40,7 +41,7 @@ var setupFairPlay = (player) => {
         keySystems: {
             "com.apple.fps.1_0": {
                 certificateUri: "{your-fairplay-certificate}",
-                getLicense: (emeOptions, contentId, keyMessage, callback) => {},
+                getLicense: (emeOptions, contentId, keyMessage, callback) => { },
                 getContentId: (emeOptions, initData) => {
                     return null;
                 },
