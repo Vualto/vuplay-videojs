@@ -1,17 +1,6 @@
 module.exports = function(grunt) {
-    var videojsUrl = "https://vjs.zencdn.net/7.4.1/video.js";
-    var yourStream =
-        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream_nodrm.ism/manifest.m3u8";
-    var vuplayUrl = "vuplay.js";
-    var vudrmToken =
-        "vualto-demo|2019-03-04T11:23:25Z|RAQrLiTYv+Z8U9LrxO0JDw==|a4fa46ee82e9c09d59cbd2077207fb5a7ae69f43";
-    var fairplayCert = "";
-
-    var getStreamType = () => {
-        var ext = yourStream.split(".").pop();
-        return ext === "mpd" ? "application/dash+xml" : "application/x-mpegURL";
-    };
-
+    var videojsUrl =
+        "https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js";
     grunt.initConfig({
         dist: "dist",
         package: grunt.file.readJSON("package.json"),
@@ -40,28 +29,8 @@ module.exports = function(grunt) {
                 options: {
                     replacements: [
                         {
-                            pattern: "{vuplayjs}",
-                            replacement: vuplayUrl,
-                        },
-                        {
-                            pattern: "{your-stream}",
-                            replacement: yourStream,
-                        },
-                        {
                             pattern: "{videojs-url}",
                             replacement: videojsUrl,
-                        },
-                        {
-                            pattern: "{your-vudrm-token}",
-                            replacement: vudrmToken,
-                        },
-                        {
-                            pattern: "{your-stream-type}",
-                            replacement: getStreamType(),
-                        },
-                        {
-                            pattern: "{your-fairplay-certificate}",
-                            replacement: fairplayCert,
                         },
                     ],
                 },

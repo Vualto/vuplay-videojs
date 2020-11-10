@@ -1,28 +1,23 @@
-<!DOCTYPE >
+<!DOCTYPE>
 <html>
-    <head>
-        <title>Vuplay with videojs</title>
-        <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet" />
-    </head>
 
-    <body>
-        <video
-            id="my-video"
-            class="video-js"
-            controls
-            preload="auto"
-            width="640"
-            height="264"
-            poster="./vuplay_poster.png"
-            data-setup="{}">
-            <p class='vjs-no-js'>
-                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
-            </p>
-        </video>
-        <script src="{videojs-url}"></script>
-        <script src="https://unpkg.com/@videojs/http-streaming@1.9.0/dist/videojs-http-streaming.js"></script>
-        <script src="https://unpkg.com/videojs-contrib-eme/dist/videojs-contrib-eme.js"></script>
-        <script src="{vuplayjs}"></script>
-    </body>
+<head>
+    <title>Vuplay with videojs</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video-js.css" rel="stylesheet" />
+</head>
+
+<body>
+    <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" poster="./vuplay_poster.png"
+        >
+        <p class='vjs-no-js'>
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+        </p>
+    </video>
+    <script src="{videojs-url}"></script>
+    <script src="https://unpkg.com/@videojs/http-streaming@2.3.0/dist/videojs-http-streaming.js"></script>
+    <script src="https://unpkg.com/videojs-contrib-eme@3.7.0/dist/videojs-contrib-eme.js"></script>
+    <script src="./vuplay.js"></script>
+</body>
+
 </html>
