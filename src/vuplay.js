@@ -18,13 +18,7 @@ function setupPlayReady(player, stream, licenseServerURL) {
     });
 }
 
-function setupFairPlay(
-    player,
-    stream,
-    certificateURI,
-    licenseServerURL,
-    token
-) {
+function setupFairPlay(player, stream, certificateURI, licenseServerURL) {
     player.src({
         src: stream,
         type: "application/x-mpegURL",
@@ -32,14 +26,6 @@ function setupFairPlay(
             "com.apple.fps.1_0": {
                 certificateUri: certificateURI,
                 licenseUri: licenseServerURL,
-                getLicense: function(
-                    emeOptions,
-                    contentId,
-                    keyMessage,
-                    callback) {},
-                getContentId: function(emeOptions, initData) {
-                    return null;
-                },
             },
         },
     });
@@ -83,8 +69,10 @@ function setupHlsNoDrm(player, stream) {
         "https://widevine-license.vudrm.tech/proxy?token=" + token;
 
     // fairplay
-    // const fairplayCertificateUri = "<YOUR FAIRPLAY CERTIFICATE URL>";
-    // const fairplayLicenseUri = "<YOUR FAIRPLAY LICENSE SERVER URL HERE>";
+    const fairplayCertificateUri =
+        "https://fairplay-license.vudrm.tech/certificate/rtve";
+    const fairplayLicenseUri =
+        "skd://fairplay-license.vudrm.tech/v2/license?token=" + token;
 
     var player = videojs("my-video", {
         autoplay: true,
@@ -99,11 +87,5 @@ function setupHlsNoDrm(player, stream) {
     setupPlayReady(player, dashDrm, playReadyLicenseServerURL);
 
     // setupHlsNoDrm( player, hlsDrm,);
-    // setupFairPlay(§
-    //     player,
-    //     hlsDrm,
-    //     fairplayCertificateUri,
-    //     fairplayLicenseUri,
-    //     token,
-    // );
+    setupFairPlay(player, hlsDrm, fairplayCertificateUri, fairplayLicenseUri);
 })();
