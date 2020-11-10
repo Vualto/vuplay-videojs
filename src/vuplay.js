@@ -1,6 +1,71 @@
-function setupWidevine(player, stream, licenseServerURL) {
+const dashNoDrm =
+    "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream_nodrm.ism/manifest.mpd";
+const hlsNoDrm =
+    "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream_nodrm.ism/manifest.m3u8";
+
+const dashDrm =
+    "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream.ism/manifest.mpd";
+const hlsDrm =
+    "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream.ism/manifest.m3u8";
+
+const token = encodeURIComponent(
+    "vualto-demo|2020-11-10T11:14:23Z|RAQrLiTYv+Z8U9LrxO0JDw==|1d1d532fd0c331ed6e3fced78afea95d4938bafb"
+);
+
+// playready
+const playReadyLicenseServerURL =
+    "https://playready-license.vudrm.tech/rightsmanager.asmx?token=" + token;
+
+// widevine
+const widevineLicenseServerURL =
+    "https://widevine-license.vudrm.tech/proxy?token=" + token;
+
+// fairplay
+const contentId = "elephants-dream";
+const fairplayCertificateUri =
+    "https://fairplay-license.vudrm.tech/certificate/vualto-demo";
+
+const fairplayLicenseUri =
+    "https://fairplay-license.staging.vudrm.tech/license/" +
+    contentId +
+    "?token=" +
+    token;
+
+(function () {
+    var player = videojs("my-video", {
+        autoplay: true,
+    });
+
+    // eme extension must be initialised before source is set
+    player.eme();
+
+    // setupDashNoDrm(player);
+    // setupHlsNoDrm(player);
+
+    // choose the DRM type you require
+    // setupWidevine(player, widevineLicenseServerURL);
+    // setupPlayReady(player, playReadyLicenseServerURL);
+
+    setupFairPlay(player, fairplayCertificateUri, fairplayLicenseUri);
+})();
+
+function setupDashNoDrm(player) {
     player.src({
-        src: stream,
+        src: dashNoDrm,
+        type: "application/dash+xml",
+    });
+}
+
+function setupHlsNoDrm(player) {
+    player.src({
+        src: hlsNoDrm,
+        type: "application/x-mpegURL",
+    });
+}
+
+function setupWidevine(player, licenseServerURL) {
+    player.src({
+        src: dashDrm,
         type: "application/dash+xml",
         keySystems: {
             "com.widevine.alpha": licenseServerURL,
@@ -8,9 +73,9 @@ function setupWidevine(player, stream, licenseServerURL) {
     });
 }
 
-function setupPlayReady(player, stream, licenseServerURL) {
+function setupPlayReady(player, licenseServerURL) {
     player.src({
-        src: stream,
+        src: dashDrm,
         type: "application/dash+xml",
         keySystems: {
             "com.microsoft.playready": licenseServerURL,
@@ -18,9 +83,9 @@ function setupPlayReady(player, stream, licenseServerURL) {
     });
 }
 
-function setupFairPlay(player, stream, certificateURI, licenseServerURL) {
+function setupFairPlay(player, certificateURI, licenseServerURL) {
     player.src({
-        src: stream,
+        src: hlsDrm,
         type: "application/x-mpegURL",
         keySystems: {
             "com.apple.fps.1_0": {
@@ -30,62 +95,3 @@ function setupFairPlay(player, stream, certificateURI, licenseServerURL) {
         },
     });
 }
-
-function setupDashNoDrm(player, stream) {
-    player.src({
-        src: stream,
-        type: "application/dash+xml",
-    });
-}
-
-function setupHlsNoDrm(player, stream) {
-    player.src({
-        src: stream,
-        type: "application/x-mpegURL",
-    });
-}
-
-(function() {
-    const dashNoDrm =
-        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream_nodrm.ism/manifest.mpd";
-    const dashDrm =
-        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream.ism/manifest.mpd";
-    const hlsNoDrm =
-        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream_nodrm.ism/manifest.m3u8";
-    const hlsDrm =
-        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream.ism/manifest.m3u8";
-
-    const token = encodeURIComponent(
-        "vualto-demo|2020-11-10T11:14:23Z|RAQrLiTYv+Z8U9LrxO0JDw==|1d1d532fd0c331ed6e3fced78afea95d4938bafb"
-    );
-
-    // playready
-    const playReadyLicenseServerURL =
-        "https://playready-license.vudrm.tech/rightsmanager.asmx?token=" +
-        token;
-
-    // widevine
-    const widevineLicenseServerURL =
-        "https://widevine-license.vudrm.tech/proxy?token=" + token;
-
-    // fairplay
-    const fairplayCertificateUri =
-        "https://fairplay-license.vudrm.tech/certificate/rtve";
-    const fairplayLicenseUri =
-        "skd://fairplay-license.vudrm.tech/v2/license?token=" + token;
-
-    var player = videojs("my-video", {
-        autoplay: true,
-    });
-
-    // eme extension must be initialised before source is set
-    player.eme();
-
-    // choose the DRM type you require
-    // setupDashNoDrm(player, dashNoDrm);
-    // setupWidevine(player, dashDrm, widevineLicenseServerURL);
-    setupPlayReady(player, dashDrm, playReadyLicenseServerURL);
-
-    // setupHlsNoDrm( player, hlsDrm,);
-    setupFairPlay(player, hlsDrm, fairplayCertificateUri, fairplayLicenseUri);
-})();
