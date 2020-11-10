@@ -1,32 +1,30 @@
-var setupWidevine = (player, stream, licenseServerURL, token) => {
+function setupWidevine(player, stream, licenseServerURL) {
     player.src({
         src: stream,
         type: "application/dash+xml",
         keySystems: {
-            "com.widevine.alpha": `${licenseServerURL}?token=${encodeURIComponent(
-                token,
-            )}`,
+            "com.widevine.alpha": licenseServerURL,
         },
     });
-};
+}
 
-var setupPlayReady = (player, stream, licenseServerURL, token) => {
+function setupPlayReady(player, stream, licenseServerURL) {
     player.src({
         src: stream,
         type: "application/dash+xml",
-        "com.microsoft.playready": {
-            url: `${licenseServerURL}?token=${encodeURIComponent(token)}`,
+        keySystems: {
+            "com.microsoft.playready": licenseServerURL,
         },
     });
-};
+}
 
-var setupFairPlay = (
+function setupFairPlay(
     player,
     stream,
     certificateURI,
     licenseServerURL,
-    token,
-) => {
+    token
+) {
     player.src({
         src: stream,
         type: "application/x-mpegURL",
@@ -34,35 +32,55 @@ var setupFairPlay = (
             "com.apple.fps.1_0": {
                 certificateUri: certificateURI,
                 licenseUri: licenseServerURL,
-                getLicense: (emeOptions, contentId, keyMessage, callback) => {},
-                getContentId: (emeOptions, initData) => {
+                getLicense: function(
+                    emeOptions,
+                    contentId,
+                    keyMessage,
+                    callback) {},
+                getContentId: function(emeOptions, initData) {
                     return null;
                 },
             },
         },
     });
-};
+}
 
-var setupDashNoDrm = (player, stream) => {
+function setupDashNoDrm(player, stream) {
     player.src({
         src: stream,
         type: "application/dash+xml",
     });
-};
+}
+
+function setupHlsNoDrm(player, stream) {
+    player.src({
+        src: stream,
+        type: "application/x-mpegURL",
+    });
+}
 
 (function() {
-    const stream =
+    const dashNoDrm =
+        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream_nodrm.ism/manifest.mpd";
+    const dashDrm =
         "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream.ism/manifest.mpd";
-    const token =
-        "vualto-demo|2020-11-10T11:14:23Z|RAQrLiTYv+Z8U9LrxO0JDw==|1d1d532fd0c331ed6e3fced78afea95d4938bafb";
+    const hlsNoDrm =
+        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream_nodrm.ism/manifest.m3u8";
+    const hlsDrm =
+        "https://d1chyo78gdexn4.cloudfront.net/vualto-demo/elephants-dream/elephants-dream.ism/manifest.m3u8";
+
+    const token = encodeURIComponent(
+        "vualto-demo|2020-11-10T11:14:23Z|RAQrLiTYv+Z8U9LrxO0JDw==|1d1d532fd0c331ed6e3fced78afea95d4938bafb"
+    );
 
     // playready
     const playReadyLicenseServerURL =
-        "https://playready-license.vudrm.tech/rightsmanager.asmx";
+        "https://playready-license.vudrm.tech/rightsmanager.asmx?token=" +
+        token;
 
     // widevine
     const widevineLicenseServerURL =
-        "https://widevine-license.vudrm.tech/proxy";
+        "https://widevine-license.vudrm.tech/proxy?token=" + token;
 
     // fairplay
     // const fairplayCertificateUri = "<YOUR FAIRPLAY CERTIFICATE URL>";
@@ -76,12 +94,14 @@ var setupDashNoDrm = (player, stream) => {
     player.eme();
 
     // choose the DRM type you require
-    // setupDashNoDrm(player, stream);
-    // setupWidevine(player, stream, widevineLicenseServerURL, token);
-    setupPlayReady(player, stream, playReadyLicenseServerURL, token);
+    // setupDashNoDrm(player, dashNoDrm);
+    // setupWidevine(player, dashDrm, widevineLicenseServerURL);
+    setupPlayReady(player, dashDrm, playReadyLicenseServerURL);
+
+    // setupHlsNoDrm( player, hlsDrm,);
     // setupFairPlay(§
     //     player,
-    //     stream,
+    //     hlsDrm,
     //     fairplayCertificateUri,
     //     fairplayLicenseUri,
     //     token,
