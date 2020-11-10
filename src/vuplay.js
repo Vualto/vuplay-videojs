@@ -36,7 +36,8 @@ function setupFairPlay(
                     emeOptions,
                     contentId,
                     keyMessage,
-                    callback) {},
+                    callback
+                ) {},
                 getContentId: function(emeOptions, initData) {
                     return null;
                 },
@@ -86,17 +87,17 @@ function setupHlsNoDrm(player, stream) {
     // const fairplayCertificateUri = "<YOUR FAIRPLAY CERTIFICATE URL>";
     // const fairplayLicenseUri = "<YOUR FAIRPLAY LICENSE SERVER URL HERE>";
 
-    var player = videojs("my-video", {
-        autoplay: true,
-    });
+    // var player = videojs("my-video", {
+    //     autoplay: true,
+    // });
 
     // eme extension must be initialised before source is set
-    player.eme();
+    // player.eme();
 
     // choose the DRM type you require
     // setupDashNoDrm(player, dashNoDrm);
     // setupWidevine(player, dashDrm, widevineLicenseServerURL);
-    setupPlayReady(player, dashDrm, playReadyLicenseServerURL);
+    // setupPlayReady(player, dashDrm, playReadyLicenseServerURL);
 
     // setupHlsNoDrm( player, hlsDrm,);
     // setupFairPlay(§

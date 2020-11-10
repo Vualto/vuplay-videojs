@@ -25,6 +25,10 @@ module.exports = function(grunt) {
                         src: "src/vuplay.js",
                         dest: "dist/vuplay.js",
                     },
+                    {
+                        src: "src/app.js",
+                        dest: "dist/app.js",
+                    },
                 ],
                 options: {
                     replacements: [
