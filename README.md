@@ -8,7 +8,7 @@
 This repository will demonstrate how to use [VUDRM](https://vudrm.vualto.com/) with the [video.js](https://videojs.com).
 If you have any questions please contact support@vualto.com
 
-This repository is currently targeted at [version 7.8.1](https://github.com/videojs/video.js) of video.js.
+This repository is currently targeted at [version 7.10.2](https://github.com/videojs/video.js) of video.js.
 
 ## Instructions
 
