@@ -24,10 +24,9 @@ This repository is currently targeted at [version 7.10.2](https://github.com/vid
 
 1. Open the repository in your favourite javascript editor.
 2. In file `src/vuplay.js` replace `<your-stream-url>` with your stream URL. This must be a [MPEG-DASH](https://en.wikipedia.org/wiki/Dynamic_Adaptive_Streaming_over_HTTP) stream.
-3. In file `src/vuplay.js` replace `<your-vudrm-token>` with a VUDRM token from [https://admin.drm.technology](https://admin.drm.technology)
-4. In file `src/vuplay.js` replace `<content-id>` with the asset content ID (this is required for fairplay only).
-5. Run `npm run build` in the project's root. This will create a `dist` folder that contains all the files needed to run this demo. N.B. You will need to add the host `videojs.local.vuplay.co.uk` to your local machine's hosts file in order for this to work.
-6. Load a supported browser and go to `https://videojs.local.vuplay.co.uk:14703`
+3. In file `src/vuplay.js` replace `<your-vudrm-token>` with a VUDRM token from [https://admin.vudrm.tech](https://admin.vudrm.tech)
+4. Run `npm run build` in the project's root. This will create a `dist` folder that contains all the files needed to run this demo. N.B. You will need to add the host `videojs.local.vuplay.co.uk` to your local machine's hosts file in order for this to work.
+5. Load a supported browser and go to `https://videojs.local.vuplay.co.uk:14703`
 
 NB: In order to allow DRM encrypted playback in chrome (<https://goo.gl/EEhZqT>), SSL has been enabled for the demo. You will get a warning about an invalid cert `NET::ERR_CERT_AUTHORITY_INVALID` but this can safely be ignored.
 
